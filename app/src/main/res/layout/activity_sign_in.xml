@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:overScrollMode="never"
-    android:padding="@dimen/_24sdp"
-    android:scrollbars="none"
-    tools:context=".activities.signInActivity">
+    tools:context=".activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +34,7 @@
             android:hint="Email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
-                android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress"
             android:paddingEnd="@dimen/_16ssp"
             android:textSize="@dimen/_13ssp"/>
         <EditText
@@ -52,27 +48,51 @@
             android:inputType="textPassword"
             android:paddingEnd="@dimen/_16ssp"
             android:textSize="@dimen/_13ssp"/>
-
-        <Button
-            android:id="@+id/buttonSignIn"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="SIGN IN"
-            android:textColor="#FFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/_8sdp"/>
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@id/inputPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="SIGN IN"
+                android:textColor="#FFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="@dimen/_8sdp"/>
+            <ProgressBar
+                android:id="@id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30.00dp"
+                android:text="Create New Account"
+                android:textColor="@color/black"
+                android:textSize="13.00sp"
+                android:textStyle="bold"/>
+
+        </FrameLayout>
+
         <TextView
             android:id="@+id/textCreateNewAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/buttonSignIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="Create new Account"
+            android:onClick="NextPage"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             />
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

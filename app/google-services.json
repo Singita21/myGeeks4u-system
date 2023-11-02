@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "581180152377",
+    "firebase_url": "https://mygeeks4u-default-rtdb.firebaseio.com",
+    "project_id": "mygeeks4u",
+    "storage_bucket": "mygeeks4u.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581180152377:android:86ef379ddee13c49f70be8",
+        "android_client_info": {
+          "package_name": "com.example.mygeeks4u"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7C2mazC_L-3a5eUs69Yd8Makg3b5rZl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
