@@ -7,14 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 
-
-import com.example.mygeeks4u.R;
 import com.example.mygeeks4u.databinding.ActivityMainBinding;
 import com.example.mygeeks4u.utilities.Constants;
 import com.example.mygeeks4u.utilities.PreferenceManager;
@@ -22,10 +17,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setListeners(){
         binding.imageSignOut.setOnClickListener(v -> signout());
+        binding.fabNewChat.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
     }
     private void loadUserDetails(){
         try {
@@ -68,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                     preferenceManager.getString(Constants.KEY_USER_ID)
             );
             documentReference.update(Constants.KEY_FCM_TOKEN, token)
-                    .addOnCompleteListener(unused -> showToast("Token updated successfully"))
                     .addOnFailureListener(e -> showToast("Unable to update token"));
         }catch (Exception e)
         {

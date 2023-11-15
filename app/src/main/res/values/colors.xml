@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="icon_background">#859EA8</color>
     <color name="primary">#FF3E4B51</color>
+    <color name="primary_text">#F59595DF</color>
+    <color name="secondary_text">#8FD1EF</color>
+    <color name="error">#EA1C14</color>
+    <color name="primary_dark">#043047</color>
 </resources>

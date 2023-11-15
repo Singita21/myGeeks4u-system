@@ -2,4 +2,6 @@
     <string name="app_name">MyGeeks4u</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="name">Name</string>
+    <string name="select_user">select user</string>
+    <string name="type_a_message">Type a message</string>
 </resources>
