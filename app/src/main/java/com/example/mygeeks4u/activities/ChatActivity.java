@@ -18,12 +18,18 @@ import com.example.mygeeks4u.models.ChatMessage;
 import com.example.mygeeks4u.models.User;
 import com.example.mygeeks4u.utilities.Constants;
 import com.example.mygeeks4u.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -35,9 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
-    private Object chatMessages;
-
-
+    private List<ChatMessage> chatMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setListeners();
+        loadReceiverDetails();
         init();
 
     }
@@ -53,24 +58,17 @@ public class ChatActivity extends AppCompatActivity {
     {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
-        receiverUser = new User();
         chatMessageList = new ArrayList<>();
         chatAdapter = new ChatAdapter(
-                chatMessageList,preferenceManager.getString(Constants.KEY_USER_ID)
+                chatMessages,
+                getBitmapFromEncodedString(receiverUser.image),
+                preferenceManager.getString(Constants.KEY_USER_ID)
         );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         database = FirebaseFirestore.getInstance();
 
 
     }
-
-    private Bitmap getBitmapFromEncodedString(String encodedImage)
-    {
-        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-    }
-
-
     private void sendMessage()
     {
         HashMap<String, Object> message = new HashMap<>();
@@ -81,12 +79,31 @@ public class ChatActivity extends AppCompatActivity {
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
         binding.inputMessage.setText(null);
     }
-
-
-    private void setListeners()
+    private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
+        if(error != null){
+            return;
+        }
+        if(value != null){
+            int count = chatMessages.size();
+            for (DocumentChange documentChange:value.getDocumentChanges()){
+                ChatMessage chatMessage = new ChatMessage();
+            }
+        }
+    };
+    private Bitmap getBitmapFromEncodedString(String encodedImage)
     {
-
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+    }
+    private void loadReceiverDetails(){
+        receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
+        binding.textName.setText(receiverUser.name);
+    }
+    private void setListeners() {
+        binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
-
+    }
+    private String getReadableDataTime(Date date){
+        return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
 }
