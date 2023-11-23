@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import android.util.Base64;
 
 import com.example.mygeeks4u.R;
 import com.example.mygeeks4u.adapters.ChatAdapter;
@@ -61,14 +61,14 @@ public class ChatActivity extends AppCompatActivity {
     private void init()
     {
 
-        preferenceManager = new PreferenceManager(getApplicationContext());
-        chatMessages = new ArrayList<>();
-        chatAdapter = new ChatAdapter(
-                chatMessages,
-                getBitmapFromEncodedString(receiverUser.image),
-                preferenceManager.getString(Constants.KEY_USER_ID)
-        );
-        binding.chatRecyclerView.setAdapter(chatAdapter);
+        if (receiverUser != null && receiverUser.image != null) {
+            chatAdapter = new ChatAdapter(
+                    chatMessages,
+                    getBitmapFromEncodedString(receiverUser.image),
+                    preferenceManager.getString(Constants.KEY_USER_ID)
+            );
+            binding.chatRecyclerView.setAdapter(chatAdapter);
+        }
         database = FirebaseFirestore.getInstance();
 
 
@@ -128,6 +128,12 @@ public class ChatActivity extends AppCompatActivity {
         byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
     }
+    private Bitmap getUserImage(String encodedImage)
+    {
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+    }
+
     private void loadReceiverDetails(){
         receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textName.setText(receiverUser.name);
