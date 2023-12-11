@@ -42,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
     }
     private void loadUserDetails(){
-
+        try {
             binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
             byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             binding.imageProfile.setImageBitmap(bitmap);
-
+        }catch (Exception e)
+        {
+            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();;
+        }
     }
     private void getToken()
     {

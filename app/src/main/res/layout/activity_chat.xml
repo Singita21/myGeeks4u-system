@@ -14,16 +14,14 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:background="@drawable/background_content_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/layoutSend"
+        app:layout_constraintTop_toBottomOf="parent"/>
     <View
         android:id="@+id/headerBackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/primary"
+        app:layout_constraintBottom_toBottomOf="@+id/ChatView"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -57,7 +55,12 @@
     app:layout_constraintTop_toTopOf="@+id/imageBack"
     tools:ignore="UnknownId" />
 
-
+    <View
+        android:id="@+id/ChatView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@+id/imageBack"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -67,21 +70,20 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:padding="@dimen/_20sdp"
-        app:stackFromEnd="true"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
-
+        app:layout_constraintTop_toBottomOf="@+id/ChatView"
         />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
+        app:layout_constraintEnd_toEndOf="@+id/viewBackground"
+        app:layout_constraintStart_toStartOf="@+id/viewBackground"
+        app:layout_constraintTop_toTopOf="@+id/viewBackground"/>
 
     <FrameLayout
         android:id="@+id/layoutSend"
@@ -92,14 +94,7 @@
         android:layout_marginBottom="@dimen/_12sdp"
         android:background="@drawable/background_chat_input"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-        <ImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:background="@drawable/ic_send"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/_8sdp"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
     </FrameLayout>
 
